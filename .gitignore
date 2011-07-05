@@ -1,0 +1,4 @@
+.idea
+mkmf.log
+*.o
+*.so

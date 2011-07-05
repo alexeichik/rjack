@@ -6,4 +6,6 @@ module RJackExt
     end
     `jackd -d alsa -r -P -nozombies`
   end
+
+#   def open_client(client_name, options = ,  server_name = )
 end

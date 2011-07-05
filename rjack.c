@@ -11,27 +11,32 @@ VALUE RJack_testing() {
    return Qnil;
 }
 
-VALUE RJack_client_open(int argc, VALUE* argv, VALUE self) {
-    printf("RJack_client_open()");
+static VALUE RJack_client_open(int argc, VALUE *argv, VALUE obj) {
+    printf("RJack_client_open\n");
     VALUE client_name, options, server_name;
     jack_options_t converted_options = JackNullOption;
-    char* converted_client_name = RSTRING_PTR(client_name);
-    char* converted_server_name = NULL;
     jack_status_t* status = ALLOC(jack_status_t);
     rb_scan_args(argc, argv, "12", &client_name, &options, &server_name);
+    char* converted_client_name = RSTRING_PTR(client_name);
+    char* converted_server_name = NULL;
     if (NIL_P(options)) {
+        printf("use JackNullOption\n");
         converted_options = JackNullOption;
     }
     else {
+        printf("not implemented\n");
 //        converted_options = (jack_options_t) FIX2INT(options); WRONG
     }
     if (!NIL_P(server_name)) {
+        printf("using non default server name");
         converted_server_name = RSTRING_PTR(server_name);
     }
+    printf("converted_client_name = %s\n", converted_client_name);
     jack_client_t *client = jack_client_open(converted_client_name, converted_options, status, converted_server_name);
     VALUE result = rb_ary_new2(2);
     rb_ary_push(result, Data_Wrap_Struct(cClient, 0, NULL, client));
-    rb_ary_push(result, Data_Wrap_Struct(cClient, 0, NULL, status));
+    rb_ary_push(result, Data_Wrap_Struct(cStatus, 0, NULL, status));
+    printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
     return result;
 }
 
@@ -45,7 +50,7 @@ void Init_rjack() {
     printf("Init_rjack()");
     mRJack = rb_define_module("RJack");
     rb_define_method(mRJack, "testing", RJack_testing, 0);
-    rb_define_method(mRJack, "client_open", RJack_client_open, -2);
+    rb_define_module_function(mRJack, "client_open", RJack_client_open, -1);
     rb_extend_object(mRJack, mRJack);
     rb_require("pavel/rjack_ext");
     VALUE mRJackExt = rb_const_get(rb_cObject, rb_intern("RJackExt"));

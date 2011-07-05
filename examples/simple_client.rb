@@ -1,8 +1,4 @@
-require "rjack"
-
-module RJack
-  extend self
-end
+require "pavel/rjack"
 
 puts RJack.methods - Module.methods
 
@@ -30,12 +26,15 @@ $phase = 0
 #  $sine[index] = 0.2 * Math.sin(2 * Math::PI * index / TABLE_SIZE)
 #end
 
-$client, status = RJack.client_open("ported simple client")
-unless $client
-  puts "RJack.client_open() failed, status = #{status}"
-#  puts "Unable to connect to JACK server" if RJack.server_failed?
-  exit(1)
-end
+#RJack.start_server
+#$client, status =
+
+puts RJack.client_open("ported simple client")
+#unless $client
+#  puts "RJack.client_open() failed, status = #{status}"
+##  puts "Unable to connect to JACK server" if RJack.server_failed?
+#  exit(1)
+#end
 #
 #if status && RJack.name_not_unique?
 #  client_name = RJack.client_name($client)
