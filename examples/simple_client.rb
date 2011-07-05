@@ -27,14 +27,12 @@ $phase = 0
 #end
 
 #RJack.start_server
-#$client, status =
-
-puts RJack.client_open("ported simple client")
-#unless $client
-#  puts "RJack.client_open() failed, status = #{status}"
-##  puts "Unable to connect to JACK server" if RJack.server_failed?
-#  exit(1)
-#end
+$client, status = RJack.client_open("ported simple client")
+unless $client
+  puts "RJack.client_open() failed, status = #{status}"
+#  puts "Unable to connect to JACK server" if RJack.server_failed?
+  exit(1)
+end
 #
 #if status && RJack.name_not_unique?
 #  client_name = RJack.client_name($client)
