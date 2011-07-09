@@ -1,0 +1,6 @@
+//     sleep_forever(rb_thread_t *th, int nodeadlock)
+
+//    rb_thread_join(thread, 1000);
+//    ruby_current_thread();
+//    rb_thread_call_with_gvl(proc, 0);
+//    rb_thread_sleep_forever();

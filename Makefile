@@ -3,7 +3,7 @@ SHELL = /bin/sh
 
 #### Start of system configuration section. ####
 
-srcdir = .
+srcdir = src
 topdir = /home/pavel/.rvm/rubies/ruby-1.9.2-p136/include/ruby-1.9.1
 hdrdir = /home/pavel/.rvm/rubies/ruby-1.9.2-p136/include/ruby-1.9.1
 arch_hdrdir = /home/pavel/.rvm/rubies/ruby-1.9.2-p136/include/ruby-1.9.1/$(arch)
@@ -92,8 +92,8 @@ COPY = cp
 
 preload = 
 
-libpath = . $(libdir) /usr/local/lib/jack
-LIBPATH =  -L. -L$(libdir) -Wl,-R$(libdir) -L/usr/local/lib/jack -Wl,-R/usr/local/lib/jack
+libpath = . $(libdir)
+LIBPATH =  -L. -L$(libdir) -Wl,-R$(libdir)
 DEFFILE = 
 
 CLEANFILES = mkmf.log
@@ -105,8 +105,8 @@ extout_prefix =
 target_prefix = /pavel
 LOCAL_LIBS = 
 LIBS = $(LIBRUBYARG_SHARED) -ljack  -lpthread -lrt -ldl -lcrypt -lm   -lc
-SRCS = rjack.c
-OBJS = rjack.o
+SRCS = port.c rjack.c status.c buffer.c client.c
+OBJS = port.o rjack.o status.o buffer.o client.o
 TARGET = rjack
 DLLIB = $(TARGET).so
 EXTSTATIC = 
@@ -154,14 +154,7 @@ install-rb: pre-install-rb install-rb-default
 install-rb-default: pre-install-rb-default
 pre-install-rb: Makefile
 pre-install-rb-default: Makefile
-pre-install-rb-default: $(RUBYLIBDIR)
-install-rb-default: $(RUBYLIBDIR)/rjack_ext.rb
-$(RUBYLIBDIR)/rjack_ext.rb: $(srcdir)/lib/rjack_ext.rb
-	@-$(MAKEDIRS) $(@D)
-	$(INSTALL_DATA) $(srcdir)/lib/rjack_ext.rb $(@D)
 $(RUBYARCHDIR):
-	$(MAKEDIRS) $@
-$(RUBYLIBDIR):
 	$(MAKEDIRS) $@
 
 site-install: site-install-so site-install-rb
